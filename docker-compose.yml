@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  mail_srv_iredmail:
+    container_name: iredmail-server
+    env_file:
+       - iredmail-docker.conf
+    image: iredmail/mariadb:stable
+    restart: always
+    hostname: mail.example.com
+
+
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "110:110"
+      - "995:995"
+      - "143:143"
+      - "993:993"
+      - "25:25"
+      - "465:465"
+      - "587:587"
+
+
+    networks:
+      mailnet:
+        ipv4_address: 172.20.0.2
+    volumes:
+      - /iredmail/data/backup-mysql:/var/vmail/backup/mysql
+      - /iredmail/data/mailboxes:/var/vmail/vmail1
+      - /iredmail/data/mlmmj:/var/vmail/mlmmj
+      - /iredmail/data/mlmmj-archive:/var/vmail/mlmmj-archive
+      - /iredmail/data/imapsieve_copy:/var/vmail/imapsieve_copy
+      - /iredmail/data/custom:/opt/iredmail/custom
+      - /iredmail/data/ssl:/opt/iredmail/ssl
+      - /iredmail/data/mysql:/var/lib/mysql
+      - /iredmail/data/clamav:/var/lib/clamav
+      - /iredmail/data/sa_rules:/var/lib/spamassassin
+      - /iredmail/data/postfix_queue:/var/spool/postfix
+
+
+networks:
+  mailnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
