@@ -1,4 +1,4 @@
-# iredmail-docker-compose
+
 [!IMPORTANT]
 Hello in case we want to generate the key manually for the variables MLMMJADMIN_API_TOKEN and ROUNDCUBE_DES_KEY and token
 
